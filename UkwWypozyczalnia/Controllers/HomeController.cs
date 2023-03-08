@@ -5,22 +5,24 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-
+using UkwWypozyczalnia.DAL;
 
 namespace UkwWypozyczalnia.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        FilmsContext db;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(FilmsContext db)
         {
-            _logger = logger;
+            this.db = db;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var kategorie = db.Categories.ToList();
+
+            return View(kategorie);
         }
 
         public IActionResult Privacy()
@@ -28,6 +30,9 @@ namespace UkwWypozyczalnia.Controllers
             return View();
         }
 
-       
+        public IActionResult StronyStatyczne(string nazwa)
+        {
+            return View(nazwa);
+        }
     }
 }
